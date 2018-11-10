@@ -4,7 +4,6 @@ import html
 
 import unidecode
 import torch
-from alphabet_detector import AlphabetDetector
 
 HTML_CLEANER_REGEX = re.compile('<.*?>')
 
@@ -31,7 +30,6 @@ def process_str(text, front_pad='\n ', end_pad=' ', maxlen=None, clean_markup=Tr
     Processes utf-8 encoded text according to the criterion specified in seciton 4 of https://arxiv.org/pdf/1704.01444.pdf (Radford et al).
     We use unidecode to clean unicode text into ascii readable text
     """
-    print(text)
     if clean_markup:
         text = clean_html(text)
 
@@ -73,7 +71,8 @@ def remove_repeats(string, n, join=True):
 
 def drop_non_slavic(s):
     ans = ""
-    print(s)
+    s = s.decode('utf-8')
+    print (s)
 
     for c in s:
         ord_c = ord(c)
@@ -94,8 +93,6 @@ def drop_non_slavic(s):
             ans += chr(ord_c - ord(u'а') + 192)
             continue
 
-        print('shit')
-
     print(ans)
     return ans
 
@@ -110,10 +107,10 @@ def tokenize_str_batch(strings, rtn_maxlen=True, process=True, maxlen=None):
         lens: Length of each string in strings after being preprocessed with `preprocess` (useful for
             dynamic length rnns). If `rtn_maxlen` is `True` then max(lens) is returned instead.
     """
-    #if process:
-    processed_strings = [process_str(x, maxlen=maxlen) for x in strings]
-    #else:
-    #   processed_strings = [drop_non_slavic(x) for x in strings]
+    if process:
+        processed_strings = [process_str(x, maxlen=maxlen) for x in strings]
+    else:
+        processed_strings = [drop_non_slavic(x.encode('utf-8')) for x in strings]
 
     lens = list(map(len, processed_strings))
     maxlen = max(lens)
