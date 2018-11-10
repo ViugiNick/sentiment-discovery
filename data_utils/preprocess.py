@@ -72,6 +72,7 @@ def remove_repeats(string, n, join=True):
 
 def drop_non_slavic(s):
     ans = ""
+    print(s)
 
     for c in s:
         ord_c = ord(c)
