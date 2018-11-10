@@ -4,6 +4,7 @@ import html
 
 import unidecode
 import torch
+from alphabet_detector import AlphabetDetector
 
 HTML_CLEANER_REGEX = re.compile('<.*?>')
 
@@ -68,6 +69,14 @@ def remove_repeats(string, n, join=True):
         return "".join(output)
     return output
 
+
+def drop_non_slavic(s, ad):
+    ans = ""
+
+    for c in s:
+        ans += c if (len(c.encode(encoding='utf_8')) == 1 or ad.only_alphabet_chars(c, "CYRILLIC")) else ''
+    return ans
+
 def tokenize_str_batch(strings, rtn_maxlen=True, process=True, maxlen=None):
     """
     Tokenizes a list of strings into a ByteTensor
@@ -79,10 +88,13 @@ def tokenize_str_batch(strings, rtn_maxlen=True, process=True, maxlen=None):
         lens: Length of each string in strings after being preprocessed with `preprocess` (useful for
             dynamic length rnns). If `rtn_maxlen` is `True` then max(lens) is returned instead.
     """
+    ad = AlphabetDetector
+
     if process:
         processed_strings = [process_str(x, maxlen=maxlen) for x in strings]
     else:
-        processed_strings = [x.encode('utf-8', 'ignore') for x in strings]
+        processed_strings = [drop_non_slavic(x.encode('utf-8', 'ignore'), ad) for x in strings]
+
     lens = list(map(len, processed_strings))
     maxlen = max(lens)
     batch_tensor = torch.ByteTensor(len(lens), maxlen)
