@@ -80,6 +80,8 @@ def drop_non_slavic(s):
             ans += c
             continue
 
+        print (ord_c)
+
         if(ord_c >= ord(u'А') and ord_c <= ord(u'Я')):
             ord_c += ord('а') - ord('А')
 
