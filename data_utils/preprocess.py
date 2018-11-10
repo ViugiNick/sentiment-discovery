@@ -70,12 +70,28 @@ def remove_repeats(string, n, join=True):
     return output
 
 
-def drop_non_slavic(s, ad):
+def drop_non_slavic(s):
     ans = ""
 
     for c in s:
-        ans += chr(c) if (len(chr(c).encode(encoding='utf_8')) == 1 or ad.only_alphabet_chars(chr(c), "CYRILLIC")) else ''
-    print(ans)
+        ord_c = ord(c)
+
+        if(ord_c < 128):
+            ans += c
+            continue
+
+        if(ord_c >= ord(u'А') and ord_c <= ord(u'Я')):
+            ord_c += ord('а') - ord('А')
+
+        if(ord_c == ord(u'ё') or ord_c == ord(u'Ё')):
+            ord_c = ord(u'е')
+
+        if(ord_c >= ord(u'а') and ord_c <= ord(u'я')):
+            ans += chr(ord_c - ord(u'а') + 192)
+            continue
+
+        print('shit')
+
     return ans
 
 def tokenize_str_batch(strings, rtn_maxlen=True, process=True, maxlen=None):
@@ -94,7 +110,7 @@ def tokenize_str_batch(strings, rtn_maxlen=True, process=True, maxlen=None):
     if process:
         processed_strings = [process_str(x, maxlen=maxlen) for x in strings]
     else:
-        processed_strings = [drop_non_slavic(x.encode('utf-8', 'ignore'), ad) for x in strings]
+        processed_strings = [drop_non_slavic(x.encode('utf-8', 'ignore')) for x in strings]
 
     lens = list(map(len, processed_strings))
     maxlen = max(lens)
