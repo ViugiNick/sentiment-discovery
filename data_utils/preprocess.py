@@ -75,6 +75,7 @@ def drop_non_slavic(s, ad):
 
     for c in s:
         ans += c if (len(c.encode(encoding='utf_8')) == 1 or ad.only_alphabet_chars(c, "CYRILLIC")) else ''
+    print(ans)
     return ans
 
 def tokenize_str_batch(strings, rtn_maxlen=True, process=True, maxlen=None):
@@ -116,7 +117,6 @@ def _tokenize_str(string, char_tensor=None):
     if char_tensor is None:
         char_tensor = torch.ByteTensor(len(string.encode()))
     for i, char in enumerate(string):
-        print(char)
         char_tensor[i] = char
     return char_tensor
 
