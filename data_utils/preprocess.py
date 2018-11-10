@@ -74,7 +74,7 @@ def drop_non_slavic(s, ad):
     ans = ""
 
     for c in s:
-        ans += c if (len(chr(c).encode(encoding='utf_8')) == 1 or ad.only_alphabet_chars(chr(c), "CYRILLIC")) else ''
+        ans += chr(c) if (len(chr(c).encode(encoding='utf_8')) == 1 or ad.only_alphabet_chars(chr(c), "CYRILLIC")) else ''
     print(ans)
     return ans
 
