@@ -107,10 +107,10 @@ def tokenize_str_batch(strings, rtn_maxlen=True, process=True, maxlen=None):
         lens: Length of each string in strings after being preprocessed with `preprocess` (useful for
             dynamic length rnns). If `rtn_maxlen` is `True` then max(lens) is returned instead.
     """
-    if process:
-        processed_strings = [process_str(x, maxlen=maxlen) for x in strings]
-    else:
-        processed_strings = [drop_non_slavic(x.encode('utf-8')) for x in strings]
+    #if process:
+    #    processed_strings = [process_str(x, maxlen=maxlen) for x in strings]
+    #else:
+    processed_strings = [drop_non_slavic(x.encode('utf-8')) for x in strings]
 
     lens = list(map(len, processed_strings))
     maxlen = max(lens)
