@@ -111,7 +111,7 @@ def tokenize_str_batch(strings, rtn_maxlen=True, process=True, maxlen=None):
     if process:
         processed_strings = [process_str(x, maxlen=maxlen) for x in strings]
     else:
-        processed_strings = [drop_non_slavic(x.encode('utf-8', 'ignore')) for x in strings]
+        processed_strings = [drop_non_slavic(x) for x in strings]
 
     lens = list(map(len, processed_strings))
     maxlen = max(lens)
