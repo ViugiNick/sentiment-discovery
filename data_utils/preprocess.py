@@ -92,6 +92,7 @@ def drop_non_slavic(s):
 
         print('shit')
 
+    print(ans)
     return ans
 
 def tokenize_str_batch(strings, rtn_maxlen=True, process=True, maxlen=None):
