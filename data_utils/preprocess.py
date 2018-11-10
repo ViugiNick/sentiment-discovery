@@ -119,6 +119,7 @@ def tokenize_str_batch(strings, rtn_maxlen=True, process=True, maxlen=None):
     batch_tensor = torch.ByteTensor(len(lens), maxlen)
 
     for i, string in enumerate(processed_strings):
+        print(string)
         _tokenize_str(string, batch_tensor[i])
     if not rtn_maxlen and rtn_maxlen is not None:
         return batch_tensor, lens
