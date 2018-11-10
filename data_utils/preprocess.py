@@ -82,7 +82,7 @@ def tokenize_str_batch(strings, rtn_maxlen=True, process=True, maxlen=None):
     if process:
         processed_strings = [process_str(x, maxlen=maxlen) for x in strings]
     else:
-        processed_strings = [x.encode('ascii', 'ignore') for x in strings]
+        processed_strings = [x.encode('utf-8', 'ignore') for x in strings]
     lens = list(map(len, processed_strings))
     maxlen = max(lens)
     batch_tensor = torch.ByteTensor(len(lens), maxlen)
@@ -103,6 +103,7 @@ def _tokenize_str(string, char_tensor=None):
     if char_tensor is None:
         char_tensor = torch.ByteTensor(len(string.encode()))
     for i, char in enumerate(string):
+        print("{} on {}".format(i, char).encode('utf-8'))
         char_tensor[i] = char
     return char_tensor
 
