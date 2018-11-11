@@ -81,8 +81,6 @@ def drop_non_slavic(s):
             ans += c
             continue
 
-        print (ord_c)
-
         if(ord_c >= ord(u'А') and ord_c <= ord(u'Я')):
             ord_c += ord('а') - ord('А')
 
@@ -110,7 +108,6 @@ def tokenize_str_batch(strings, rtn_maxlen=True, process=True, maxlen=None):
     #if process:
     #    processed_strings = [process_str(x, maxlen=maxlen) for x in strings]
     #else:
-    print (strings)
     processed_strings = [drop_non_slavic(x.encode('utf-8')) for x in strings]
 
     lens = list(map(len, processed_strings))
