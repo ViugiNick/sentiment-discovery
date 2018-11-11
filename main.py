@@ -145,9 +145,6 @@ if args.loss_scale != 1 and args.dynamic_loss_scale:
 # └ 1 0 0 0 0 0 ... 1 0 0 0 0 0 ... ┘.
 # With 1 indicating to reset hidden state at that particular minibatch index
 train_data, val_data, test_data = data_config.apply(args)
-print(train_data)
-print(val_data)
-print(test_data)
 ###############################################################################
 # Build the model
 ###############################################################################

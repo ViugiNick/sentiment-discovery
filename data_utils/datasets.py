@@ -219,9 +219,11 @@ class json_dataset(data.Dataset):
 
         for j in self.load_json_stream(load_path):
             s = j[text_key]
+            print(s)
             if should_process:
                 s = self.preprocess_fn(s, maxlen=None, encode=None)
                 j[text_key] = s
+            print(s)
             self.X.append(s)
             self.Y.append(j[label_key])
 
