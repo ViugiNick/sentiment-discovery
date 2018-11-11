@@ -301,7 +301,9 @@ class json_dataset(data.Dataset):
     def load_json_stream(self, load_path):
         if not self.loose_json:
             jsons = json.load(open(load_path, 'r'))
+            print(json)
             generator = iter(jsons)
+            print(json)
         else:
             def gen_helper():
                 with open(load_path, 'r') as f:
