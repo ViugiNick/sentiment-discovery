@@ -302,6 +302,7 @@ class json_dataset(data.Dataset):
         if not self.loose_json:
             jsons = json.load(open(load_path, 'r'))
             print(jsons)
+            print(load_path)
             generator = iter(jsons)
             print(jsons)
         else:
